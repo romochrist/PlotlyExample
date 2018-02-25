@@ -1,0 +1,52 @@
+---
+title: "Plotly Example"
+author: "Christian Romo"
+date: "24/02/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+```{r libraries}
+    require(plotly)
+```
+
+## Plotly Example
+
+##### Simulating the sample mean of 40 exponentials
+
+```{r plot}
+    set.seed(21547)
+    # number of simulations
+    nSims <- 1000
+    # number of exponentials
+    nExp <- 40
+    # lambda
+    lambdaExp <- 0.2
+    # mean of exponential distribution
+    meanExp <- 1/lambdaExp
+    # standard deviation
+    sdExp <- 1/lambdaExp
+    xNorm <- seq(-5, 5, length = 100)
+    yNorm <- dnorm(seq(-5, 5, length = 512))
+    
+    
+    expMeans <- matrix(rexp(nExp * nSims, rate = lambdaExp), ncol = nExp)
+    expMeans <- apply(expMeans, 1, mean)
+    expMeans <- (expMeans - meanExp) / (sdExp / sqrt(nExp))
+    dty <- density(expMeans)
+    # plot(dty$x, dty$y, xlab = "", ylab = "density", type = "n", xlim = c(-5, 5), ylim = c(0, .5))
+    plotData = data.frame(dx = dty$x, dy = dty$y)
+    p <- plot_ly(x = dty$x) %>%
+        add_lines(y = dty$y,
+            line = list(color = '#07A4B5'),
+            name = "Normal aproximation", showlegend = TRUE) %>%
+        add_lines(y = yNorm,
+            line = list(color = '#999999'),
+            name = "Normal ditribution", showlegend = TRUE)
+    p
+```
+
+## Thanks
