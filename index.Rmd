@@ -45,7 +45,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
             name = "Normal aproximation", showlegend = TRUE) %>%
         add_lines(y = yNorm,
             line = list(color = '#999999'),
-            name = "Normal ditribution", showlegend = TRUE)
+            name = "Normal distribution", showlegend = TRUE)
     p
 ```
 
